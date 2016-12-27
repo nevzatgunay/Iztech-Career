@@ -36,7 +36,7 @@
                         <a href="department.php">Deparments</a>
                     </li>
 					<li>
-                        <a href="company.php">Companies</a>
+                        <a href="company.php">Company</a>
                     </li>
                     <li>
                         <a href="sign-up.php">Sign Up</a>
