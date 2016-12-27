@@ -13,6 +13,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -33,10 +35,7 @@
                         <a href="jobs.php">Browse Jobs</a>
                     </li>
 					<li>
-                        <a href="department.php">Deparments</a>
-                    </li>
-					<li>
-                        <a href="company.php">Company</a>
+                        <a href="company.php">Companies</a>
                     </li>
                     <li>
                         <a href="sign-up.php">Sign Up</a>
@@ -54,8 +53,10 @@
     <div class="container">
         <header class="jumbotron hero-spacer">
             <h1>IZTECH Career</h1>
-            <p>Tanıtım yazısı gelecek</p>
-            <p><a class="btn btn-primary btn-large">Find A Job</a>
+            <p>IZTECH Career is a career platform that is to find a right job or internship for students and graduates of all İzmir Institute of Technology.</p>
+            <p>IZTECH Career is an open source product of IZTECH SKS(The Center for Health, Culture and Sports).</p>
+			<p>You can contribute the project via <a href="https://github.com/nevzatgunay/Iztech-Career">Github</a>.</p>
+			<p><a class="btn btn-primary btn-large" href="jobs.php">Find A Job</a>
             </p>
         </header>
 
@@ -66,28 +67,55 @@
                 <h3>Latest Jobs</h3>
             </div>
         </div>
+		
         <div class="row text-center">
+		
+		<?php
+		
 
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Intern</h3>
-                        <p>Computer Engineering Intern at Google ....</p>
-                        <p>
-                            <a href="#" class="btn btn-default">Detaylı bilgi</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+			require_once("connect.php");
+			
+			$query = "select j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
+					from jobs j
+					inner join company c on j.comid=c.comid 
+					order by rand()
+					limit 4";
+					
+								
+			$sql = mysql_query($query) or die(mysql_error());
 
+		
+				while($read = mysql_fetch_array($sql))
+				{
+							
+					echo "<div class='col-md-3 col-sm-6 hero-feature'>
+							<div class='thumbnail'>
+								<img src='images/".$read['cid'].".png' alt=''>
+								<div class='caption'>
+									<h3>".$read['jname']."</h3>
+									<h4>".$read['cname']."</h4>
+									<p>".$read['jlocation']."</p>
+									<p>".$read['jdate']."</p>
+									<p>
+										<a href='#' class='btn btn-default'>More</a>
+									</p>
+								</div>
+							</div>
+						</div>";
+					
+				}
+			
+
+			mysql_close($connection);
+
+		?>
            
         </div>
         <hr>
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; IZTECH Career 2016</p>
+                    <p>Copyright &copy; IZTECH Career 2016 by <a href="http://nevzatgunay.net">Nevzat Günay</a></p>
                 </div>
             </div>
         </footer>

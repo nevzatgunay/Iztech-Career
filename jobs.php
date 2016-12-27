@@ -13,6 +13,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -33,9 +35,6 @@
                         <a href="jobs.php">Browse Jobs</a>
                     </li>
 					<li>
-                        <a href="department.php">Deparments</a>
-                    </li>
-					<li>
                         <a href="company.php">Companies</a>
                     </li>
                     <li>
@@ -53,41 +52,69 @@
     </nav>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-10">
                 <h3>All Jobs</h3>
             </div>
+			<div class="col-md-2">
+				<div class="dropdown drpdown">
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					Order By
+					<span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					<li><a href="#">Newest</a></li>
+					<li><a href="#">Oldest</a></li>
+				  </ul>
+				</div>
+			</div>
         </div>
         <div class="row text-center">
-		<?php
-			$user = "root"; //veritabanı kullanıcı adı
-			$pwd = "1234"; //veritabanı şifresi
-			$host = "localhost"; //mysql server
-			$db = "kitaplik"; //veritabanı adı
+		
+            <?php
+		
 
+			require_once("connect.php");
+			
+			$query = "select j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
+					from jobs j
+					inner join company c on j.comid=c.comid 
+					order by rand()
+					";
+					
+								
+			$sql = mysql_query($query) or die(mysql_error());
 
-			$conn = mysql_connect($host,$user,$pwd) or die("MySQL sunucusuna baglanilamadi!!!".mysql_error());
+		
+				while($read = mysql_fetch_array($sql))
+				{
+							
+					echo "<div class='col-md-3 col-sm-6 hero-feature'>
+							<div class='thumbnail'>
+								<img src='images/".$read['cid'].".png' alt=''>
+								<div class='caption'>
+									<h3>".$read['jname']."</h3>
+									<h4>".$read['cname']."</h4>
+									<p>".$read['jlocation']."</p>
+									<p>".$read['jdate']."</p>
+									<p>
+										<a href='#' class='btn btn-default'>More</a>
+									</p>
+								</div>
+							</div>
+						</div>";
+					
+				}
+			
 
-			mysql_select_db($db) or die("Veritabani secilemedi!!!".mysql_error());
+			mysql_close($connection);
+
 		?>
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Intern</h3>
-                        <p>Computer Engineering Intern at Google ....</p>
-                        <p>
-                            <a href="#" class="btn btn-default">Detaylı bilgi</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
         </div>
         <hr>
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; IZTECH Career 2016</p>
+                    <p>Copyright &copy; IZTECH Career 2016 by <a href="http://nevzatgunay.net">Nevzat Günay</a></p>
                 </div>
             </div>
         </footer>
