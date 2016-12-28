@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IZTECH Career</title>
+    <title>IZTECH Career - Companies</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -51,23 +51,7 @@
         </div>
     </nav>
     <div class="container">
-        <header class="jumbotron hero-spacer">
-            <h1>IZTECH Career</h1>
-            <p>IZTECH Career is a career platform that is to find a right job or internship for students and graduates of all İzmir Institute of Technology.</p>
-            <p>IZTECH Career is an open source product of IZTECH SKS(The Center for Health, Culture and Sports).</p>
-			<p>You can contribute the project via <a href="https://github.com/nevzatgunay/Iztech-Career">Github</a>.</p>
-			<p><a class="btn btn-primary btn-large" href="jobs.php">Find A Job</a>
-            </p>
-        </header>
-
-        <hr>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Latest Jobs</h3>
-            </div>
-        </div>
-		
+        		
         <div class="row text-center">
 		
 		<?php
@@ -75,11 +59,9 @@
 
 			require_once("connect.php");
 			
-			$query = "select j.jobid as jid,j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
-					from jobs j
-					inner join company c on j.comid=c.comid 
-					order by rand()
-					limit 4";
+			$query = "select c.name as cname,c.comid as cid
+					from company c
+					";
 					
 								
 			$sql = mysql_query($query) or die(mysql_error());
@@ -92,13 +74,7 @@
 							<div class='thumbnail'>
 								<img src='images/".$read['cid'].".png' alt=''>
 								<div class='caption'>
-									<h3>".$read['jname']."</h3>
-									<h4>".$read['cname']."</h4>
-									<p>".$read['jlocation']."</p>
-									<p>".$read['jdate']."</p>
-									<p>
-										<a href='job-detail.php?jobid=".$read['jid']."' class='btn btn-default'>More</a>
-									</p>
+									<h3>".$read['cname']."</h3>
 								</div>
 							</div>
 						</div>";

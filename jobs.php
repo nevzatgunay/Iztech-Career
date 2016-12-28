@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IZTECH Career</title>
+    <title>IZTECH Career - Browse Jobs</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -61,9 +61,9 @@
 					Order By
 					<span class="caret"></span>
 				  </button>
-				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					<li><a href="#">Newest</a></li>
-					<li><a href="#">Oldest</a></li>
+				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+					<li><a href="jobs.php?orderby=newest">Newest</a></li>
+					<li><a href="jobs.php?orderby=oldest">Oldest</a></li>
 				  </ul>
 				</div>
 			</div>
@@ -71,15 +71,38 @@
         <div class="row text-center">
 		
             <?php
-		
+			
+			$orderby="";
+			
+			if(isset($_GET['orderby'])){
+					$orderby=$_GET['orderby'];
+			}
+			
 
 			require_once("connect.php");
 			
-			$query = "select j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
+			$query="";
+			if($orderby=="newest"){
+				$query = "select j.jobid as jid,j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
+					from jobs j
+					inner join company c on j.comid=c.comid 
+					order by jdate desc
+					";
+			}else if($orderby=="oldest"){
+				$query = "select j.jobid as jid,j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
+					from jobs j
+					inner join company c on j.comid=c.comid 
+					order by jdate asc
+					";
+			}else{
+				$query = "select j.jobid as jid,j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
 					from jobs j
 					inner join company c on j.comid=c.comid 
 					order by rand()
 					";
+			}
+			
+			
 					
 								
 			$sql = mysql_query($query) or die(mysql_error());
@@ -88,7 +111,7 @@
 				while($read = mysql_fetch_array($sql))
 				{
 							
-					echo "<div class='col-md-3 col-sm-6 hero-feature'>
+					echo "<div class='col-md-3 col-sm-6'>
 							<div class='thumbnail'>
 								<img src='images/".$read['cid'].".png' alt=''>
 								<div class='caption'>
@@ -97,7 +120,7 @@
 									<p>".$read['jlocation']."</p>
 									<p>".$read['jdate']."</p>
 									<p>
-										<a href='#' class='btn btn-default'>More</a>
+										<a href='job-detail.php?jobid=".$read['jid']."' class='btn btn-default'>More</a>
 									</p>
 								</div>
 							</div>

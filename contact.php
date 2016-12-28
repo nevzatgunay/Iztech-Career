@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IZTECH Career</title>
+    <title>IZTECH Career - Contact</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -51,64 +51,57 @@
         </div>
     </nav>
     <div class="container">
-        <header class="jumbotron hero-spacer">
-            <h1>IZTECH Career</h1>
-            <p>IZTECH Career is a career platform that is to find a right job or internship for students and graduates of all İzmir Institute of Technology.</p>
-            <p>IZTECH Career is an open source product of IZTECH SKS(The Center for Health, Culture and Sports).</p>
-			<p>You can contribute the project via <a href="https://github.com/nevzatgunay/Iztech-Career">Github</a>.</p>
-			<p><a class="btn btn-primary btn-large" href="jobs.php">Find A Job</a>
-            </p>
-        </header>
-
-        <hr>
 
         <div class="row">
             <div class="col-lg-12">
-                <h3>Latest Jobs</h3>
+                <h3>Contact</h3>
             </div>
         </div>
 		
         <div class="row text-center">
 		
-		<?php
+		<p>
+			This page is a contact form for any question,wish or complaint. You can use the mail form below.
+		</p>
 		
-
-			require_once("connect.php");
-			
-			$query = "select j.jobid as jid,j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
-					from jobs j
-					inner join company c on j.comid=c.comid 
-					order by rand()
-					limit 4";
-					
-								
-			$sql = mysql_query($query) or die(mysql_error());
-
-		
-				while($read = mysql_fetch_array($sql))
-				{
-							
-					echo "<div class='col-md-3 col-sm-6'>
-							<div class='thumbnail'>
-								<img src='images/".$read['cid'].".png' alt=''>
-								<div class='caption'>
-									<h3>".$read['jname']."</h3>
-									<h4>".$read['cname']."</h4>
-									<p>".$read['jlocation']."</p>
-									<p>".$read['jdate']."</p>
-									<p>
-										<a href='job-detail.php?jobid=".$read['jid']."' class='btn btn-default'>More</a>
-									</p>
-								</div>
-							</div>
-						</div>";
-					
-				}
-			
-
-			mysql_close($connection);
-
-		?>
+		<form action="contact.php" method="post">
+        Name:<br/>
+        <input type="text" name="name"/><br/>
+        E-Mail:<br/>
+        <input type="text" name="email"/><br/>
+        Subject:<br/>
+        <input type="text" name="subject"/><br/>
+        Your Message:</br>
+        <textarea name="message"></textarea><br/>
+        <input type="submit" value="Submit"/>
+     </form>
+	 
+	 <?php
+	 
+		if(isset($_[POST]['name']) && isset($_[POST]['email']) && isset($_[POST]['subject']) && isset($_[POST]['message']))
+		{
+		   if(empty($_[POST]['name']) || empty($_[POST]['email']) || empty($_[POST]['subject']) || empty($_[POST]['message']))
+		   {
+			  echo "Please,fill the form!";
+		   }
+		   else
+		   {
+			  $name    = strip_tags($_POST['name']);
+			  $email   = strip_tags($_POST['email']);
+			  $subject = strip_tags($_POST['subject']);
+			  $message = strip_tags($_POST['message']);
+			  $content  = 'Name: ' .$name. '<br/>E-Mail: ' .$email. '<br/>'. $message;
+			  mail('gunaynevzat@yandex.com', $subject, $content);
+			  
+			  echo "Your message is send";
+		   }
+		}
+		else
+		{
+		   echo 'Please,fill the form!';
+		}
+	 
+	?>
            
         </div>
         <hr>

@@ -1,8 +1,8 @@
 <?php
-			$user = "root"; //veritabanı kullanıcı adı
-			$pwd = "Sampiyon-57"; //veritabanı şifresi
-			$host = "localhost"; //mysql server
-			$db = "iztechcareer"; //veritabanı adı
+			$user = "root"; 
+			$pwd = "Sampiyon-57"; 
+			$host = "localhost"; 
+			$db = "iztechcareer"; 
 			
 			$connection = @mysql_connect($host,$user,$pwd);
 			
