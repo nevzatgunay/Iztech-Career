@@ -2,8 +2,6 @@
     session_start();
 ?>
 
-<?php ob_start(); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IZTECH Career - Contact</title>
+    <title>IZTECH Career - Sign Up</title>
 
     <link href="style.css" rel="stylesheet">
 	
@@ -46,46 +44,39 @@
 		</div>
 		
 		<div class="latest-jobs">
-			<div class="latest-jobs-header">
-				<h2 class="latest-header">Contact</h2>
-				<table class="company-container">
-					<form action="contact.php" method="post">
-						<table>
-							<tr>
-								<td>Your Name:</td>
-								<td>
-									<input type="text" name="name" size="30"/>
-								</td>
-							</tr>
-							
-							<tr>
-								<td>Your Email:</td>
-								<td>
-									<input type="text" name="email" size="30"/>
-								</td>
-							</tr>
-							<tr>
-								<td>Your Message:</td>
-								<td>
-									 <textarea name="message" rows="7" cols="30"></textarea>
-								</td>
-							</tr>
-							
-							<tr>
-								<td></td>
-								<td>
-									 <input type="submit" name="button" value="Submit"/>
-								</td>
-							</tr>
-						</table>
-					</form>
-				<?php
-				
-				if(isset($_POST['button'])){
-					$name = $_POST['name'];
-					$email = $_POST['email'];
-					$message = $_POST['message'];
+			
+			<form action="sign-up.php" method="post" class="sign-in-form">
+			<h4>Please your instituonal email for sign up and we will send you an email for email verification.</h4>
+				<table>
+					<tr>
+						<td>Name Surname:</td>
+						<td>
+							<input type="text" name="namesurname"/>
+						</td>
+						<td>
+							<select name="email">
+								<option value="@std.iyte.edu.tr">@std.iyte.edu.tr</option>
+								<option value="@iyte.edu.tr">@iyte.edu.tr</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+					<td></td>
+					<td><input type="submit" name="button" value="Activate"/></td>
+					<td></td>
+					</tr>
 					
+				</table>
+			</form>
+			
+			<?php
+				if(isset($_POST['button'])){
+					$name = $_POST['namesurname'];
+					$email = $_POST['email'];
+					
+					$username=$name.$email;
+					
+					$message ="<a href='http://iztechcareer.nevzatgunay.net/verify.php?verify=1&email=".$username.">Verify</a>";
 					
 					require("class.phpmailer.php");
 					$mail = new PHPMailer();
@@ -101,9 +92,9 @@
 					$mail->Username = "newzatr57@gmail.com";
 					$mail->Password = "sampiyon";
 					$mail->SetFrom("newzatr57@gmail.com", "IZTECH Career");
-					$mail->AddAddress("newzatr57@gmail.com"); 
-					$mail->Subject = "IZTECH Career"; 
-					$mail->Body = $message; 
+					$mail->AddAddress($username); 
+					$mail->Subject = "Activate your IZTECH Career account"; 
+					$mail->Body = "Please click the link for verification and also your default password:123 ".$message; 
 					if(!$mail->Send()){
 						echo "Email Sending Error!: ".$mail->ErrorInfo;
 					} else {
@@ -111,11 +102,7 @@
 					}
 					
 				}
-				
-
-		?>
-			</table>
-			</div>
+			?>
 		</div>
 		
 		<div class="footer">

@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,67 +15,53 @@
 
     <title>IZTECH Career</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+	
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Menu</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.php">IZTECH Career</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="jobs.php">Browse Jobs</a>
-                    </li>
-					<li>
-                        <a href="company.php">Companies</a>
-                    </li>
-                    <li>
-                        <a href="sign-up.php">Sign Up</a>
-                    </li>
-					<li>
-                        <a href="sign-in.php">Sign In</a>
-                    </li>
-                    <li>
-                        <a href="contact.php">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <div class="container">
-        <header class="jumbotron hero-spacer">
-            <h1>IZTECH Career</h1>
-            <p>IZTECH Career is a career platform that is to find a right job or internship for students and graduates of all İzmir Institute of Technology.</p>
-            <p>IZTECH Career is an open source product of IZTECH SKS(The Center for Health, Culture and Sports).</p>
-			<p>You can contribute the project via <a href="https://github.com/nevzatgunay/Iztech-Career">Github</a>.</p>
-			<p><a class="btn btn-primary btn-large" href="jobs.php">Find A Job</a>
-            </p>
-        </header>
+		<div class="menu">
+			<ul>
+			  <li><a href="index.php">Home</a></li>
+			  <li><a href="jobs.php">Browse Jobs</a></li>
+			  <li><a href="company.php">Companies</a></li>
+			  <li><a href="sign-up.php">Sign Up</a></li>
+			  <li><a href="contact.php">Contact</a></li>
+			  <li style="float:right">
+					<?php
 
-        <hr>
+						if(isset($_SESSION["username"])){
+							echo "<a class='active' href='myaccount.php'> Welcome, ".$_SESSION["username"]."</a>";
+						}
+						else
+							echo "<a class='active' href='sign-in.php'>Sign In</a>"; 
+					?>
+				  
+			  </li>
+			</ul>
+		</div>
+		
+		<div class="header">
+			<div class="header-info">
+				<h1>IZTECH Career</h1>
+				<p>IZTECH Career is a platform that is to find a right job or internship for all students and graduates of <a href="http://www.iyte.edu.tr">İzmir Institute of Technology</a>.</p>
+				<p>IZTECH Career is an open source product of IZTECH SKS(The Center for Health,Culture and Sports).</p>
+				<p>You can contribute the project via <a href="https://github.com/nevzatgunay/Iztech-Career">Github</a>.</p>
+				
+				<a href="jobs.php" class="btn">Find A Job!</a>
+			</div>
+		</div>
+		
+		<div class="latest-jobs">
+			<div class="latest-jobs-header">
+				<h2 class="latest-header">Latest Jobs</h2>
+				<table class="job-container">
+				<tr>
+				<?php
 
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Latest Jobs</h3>
-            </div>
-        </div>
-		
-        <div class="row text-center">
-		
-		<?php
-		
 
 			require_once("connect.php");
 			
@@ -88,20 +78,26 @@
 				while($read = mysql_fetch_array($sql))
 				{
 							
-					echo "<div class='col-md-3 col-sm-6'>
+					echo "
+					
+					<td class='job-border'>
 							<div class='thumbnail'>
 								<img src='images/".$read['cid'].".png' alt=''>
-								<div class='caption'>
+							</div>
+							
+							<div class='caption'>
 									<h3>".$read['jname']."</h3>
 									<h4>".$read['cname']."</h4>
 									<p>".$read['jlocation']."</p>
 									<p>".$read['jdate']."</p>
-									<p>
+									
+							</div>
+							<div class='btn-more'>
+								<p>
 										<a href='job-detail.php?jobid=".$read['jid']."' class='btn btn-default'>More</a>
 									</p>
-								</div>
 							</div>
-						</div>";
+					</td>";
 					
 				}
 			
@@ -109,21 +105,16 @@
 			mysql_close($connection);
 
 		?>
-           
-        </div>
-        <hr>
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; IZTECH Career 2016 by <a href="http://nevzatgunay.net">Nevzat Günay</a></p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-	
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+		</tr></table>
+			</div>
+		</div>
+		
+		<div class="footer">
+			<p class="footer-content">Copyright &copy; IZTECH Career 2017 by <a href="https://www.facebook.com/profile.php?id=100005771017510">Pınar Yurdagül</a> & <a href="http://nevzatgunay.net">Nevzat Günay</a></p>
+		</div>
+        
+		
+	</div>
 
 </body>
 

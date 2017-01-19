@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IZTECH Career - Browse Jobs</title>
+    <title>IZTECH Career - Apply</title>
 
     <link href="style.css" rel="stylesheet">
 	
@@ -45,63 +45,28 @@
 		
 		<div class="latest-jobs">
 			<div class="latest-jobs-header">
-				<h2 class="latest-header">All Jobs</h2>
-				<table class="job-container">
+				<h2 class="latest-header">Apply</h2>
+				<table class="company-container">
 				
-				<?php
-	
+				<?php	
 
-			require_once("connect.php");
-			
-			$query = "select j.jobid as jid,j.name as jname,j.date as jdate,j.location as jlocation,c.name as cname,c.comid as cid
-					from jobs j
-					inner join company c on j.comid=c.comid 
-					order by rand()";
-					
-				
-								
-			$sql = mysql_query($query) or die(mysql_error());
-			$column_number=0;
-			
-				while($read = mysql_fetch_array($sql))
-				{
-						if($column_number%4==0){
-								echo "<tr>";
+					if(isset($_SESSION["username"])){
+						$jobid = $_GET['jobid'];
+						$userid = $_SESSION["userid"];
+						require_once("connect.php");
+						$query = "INSERT INTO userjob(uid, jobid) VALUES($userid,$jobid)";
+									
+						$retval = mysql_query($query);
+						
+						if(! $retval ) {
+							  die('Error! ' . mysql_error());
 						}
+						   
+						header("Location: jobs.php");
 						
-						
-						
-							echo "
-						
-								<td class='job-border'>
-										<div class='thumbnail'>
-											<img src='images/".$read['cid'].".png' alt=''>
-										</div>
-										
-										<div class='caption'>
-												<h3>".$read['jname']."</h3>
-												<h4>".$read['cname']."</h4>
-												<p>".$read['jlocation']."</p>
-												<p>".$read['jdate']."</p>
-												
-										</div>
-										<div class='btn-more'>
-											<p>
-													<a href='apply.php?jobid=".$read['jid']."' class='btn'>Apply</a>
-												</p>
-										</div>
-										
-								</td>";
-								$column_number++;
-								if($column_number%4==0){
-										echo "</tr>";
-								}
-						
-						
-						
-					
-				}
-			
+					}else{
+						header("Location: sign-in.php");
+					}
 			
 			mysql_close($connection);
 
