@@ -10,7 +10,9 @@ The project will be evaluated by lecturer <a href="http://kalfaoglu.com">Turgut 
 
 Demo http://iztechcareer.nevzatgunay.net
 
-#We do IZTECH career website project. It is supplied for students find job and internship that company publishes job and 
+#Process
+
+We do IZTECH career website project. It is supplied for students find job and internship that company publishes job and 
 internship announcements. Person must be register with your IZTECH mail address the system to apply these job advertisements.
 After registering, you will receive verify mail to your e-mail address then confirming this address, then you will get the default
 password 123. You must be change this password then sign in page, you will be registered. Register user upload user profile change
