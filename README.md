@@ -1,9 +1,5 @@
 # IZTECH Career
 
-PINAR YURDAGUL - 200201057
-
-NEVZAT GÜNAY - 200201062
-
 The project is an university career system and is developed for CENG388 Course at İzmir Institute of Technology.
 
 The project will be evaluated by lecturer <a href="http://kalfaoglu.com">Turgut Kalfaoğlu</a>
