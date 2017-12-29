@@ -1,6 +1,6 @@
 <?php
 			$user = "root"; 
-			$pwd = "Sampiyon-57"; 
+			$pwd = "***"; 
 			$host = "localhost"; 
 			$db = "iztechcareer"; 
 			
