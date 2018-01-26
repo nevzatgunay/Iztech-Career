@@ -90,7 +90,7 @@
 					$mail->SetLanguage("tr", "phpmailer/language");
 					$mail->CharSet  ="utf-8";
 					$mail->Username = "newzatr57@gmail.com";
-					$mail->Password = "sampiyon";
+					$mail->Password = "****";
 					$mail->SetFrom("newzatr57@gmail.com", "IZTECH Career");
 					$mail->AddAddress($username); 
 					$mail->Subject = "Activate your IZTECH Career account"; 
